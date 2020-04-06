@@ -5,6 +5,8 @@
     <title>Sample App</title>
 </head>
 <body>
-    <h1>{{.user.Name}}</h1>
+    {{ range .users }}
+        <div>ID：{{ .Id }}、名前：{{ .Name }}</div>
+    {{end}}
 </body>
 </html>

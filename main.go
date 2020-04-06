@@ -33,14 +33,15 @@ func main() {
 	// DBクローズ
 	defer db.Close()
 
-	user := user{}
-	db.First(&user, "id=?", 1)
+	users := []user{}
+	// db.First(&user, "name=?", "taro")
+	db.Find(&users)
 
 	router := gin.Default()
 	router.LoadHTMLGlob("views/*.html")
 
 	router.GET("/", func(ctx *gin.Context) {
-		ctx.HTML(200, "index.html", gin.H{"user": user})
+		ctx.HTML(200, "index.html", gin.H{"users": users})
 	})
 
 	router.Run()
