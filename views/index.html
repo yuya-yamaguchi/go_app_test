@@ -5,6 +5,19 @@
     <title>Sample App</title>
 </head>
 <body>
-    <h1>{{.user.Name}}</h1>
+  <h3>User追加</h3>
+  <form method="post" action="/new">
+    <div>名前<input type="name" name="text" size="30" placeholder="名前を入力" >
+      <input type="submit" value="Send">
+    </div>
+  </form>
+  <h3>User一覧</h3>
+  {{ range .users }}
+      <div>ID：{{ .Id }}、名前：{{ .Name }}
+        <a href="/show/{{.Id}}">編集</a>
+        <a href="/delete/{{.Id}}">削除</a>
+      </div>
+
+  {{end}}
 </body>
 </html>

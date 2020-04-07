@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Sample App</title>
+</head>
+<body>
+  <h3>User詳細</h3>
+  <a href="/">戻る</a>
+  <form method="post" action="/update/{{.user.Id}}">
+    <div>名前<input type="name" name="text" size="30" placeholder="名前を入力" value={{ .user.Name }}>
+      <input type="submit" value="Send">
+    </div>
+  </form>
+  <div>ID：{{ .user.Id }}、名前：{{ .user.Name }}</div>
+</body>
+</html>
