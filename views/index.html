@@ -13,7 +13,10 @@
   </form>
   <h3>User一覧</h3>
   {{ range .users }}
-      <div>ID：{{ .Id }}、名前：{{ .Name }}</div>
+      <div>ID：{{ .Id }}、名前：{{ .Name }}
+        <a href="/show/{{.Id}}">編集</a>
+      </div>
+
   {{end}}
 </body>
 </html>
