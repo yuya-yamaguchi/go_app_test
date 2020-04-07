@@ -6,9 +6,9 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
-type user struct {
-	Id   int    `json:id`
-	Name string `json:name`
+type User struct {
+	Id   int
+	Name string
 }
 
 func gormConnect() *gorm.DB {
@@ -28,21 +28,37 @@ func gormConnect() *gorm.DB {
 }
 
 func main() {
-	// DB接続
-	db := gormConnect()
-	// DBクローズ
-	defer db.Close()
-
-	users := []user{}
-	// db.First(&user, "name=?", "taro")
-	db.Find(&users)
 
 	router := gin.Default()
 	router.LoadHTMLGlob("views/*.html")
 
 	router.GET("/", func(ctx *gin.Context) {
+		users := []User{}
+		dbSelect(&users)
 		ctx.HTML(200, "index.html", gin.H{"users": users})
 	})
 
+	router.POST("/new", func(ctx *gin.Context) {
+		name := ctx.PostForm("text")
+		dbInsert(name)
+		ctx.Redirect(302, "/")
+	})
+
 	router.Run()
+}
+
+//  SELECT処理
+func dbSelect(users *[]User) {
+	db := gormConnect()
+	defer db.Close()
+
+	db.Find(&users)
+}
+
+// ISNERT処理
+func dbInsert(name string) {
+	db := gormConnect()
+	defer db.Close()
+
+	db.Create(&User{Name: name})
 }
