@@ -15,6 +15,7 @@
   {{ range .users }}
       <div>ID：{{ .Id }}、名前：{{ .Name }}
         <a href="/show/{{.Id}}">編集</a>
+        <a href="/delete/{{.Id}}">削除</a>
       </div>
 
   {{end}}

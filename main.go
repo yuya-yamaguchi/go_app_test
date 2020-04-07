@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -58,12 +57,17 @@ func main() {
 	router.POST("/update/:id", func(ctx *gin.Context) {
 		n := ctx.Param("id")
 		id, _ := strconv.Atoi(n)
-		fmt.Println(id)
 		name := ctx.PostForm("text")
 		dbUpdate(id, name)
 		ctx.Redirect(302, "/")
 	})
 
+	router.GET("/delete/:id", func(ctx *gin.Context) {
+		n := ctx.Param("id")
+		id, _ := strconv.Atoi(n)
+		dbDelete(id)
+		ctx.Redirect(302, "/")
+	})
 	router.Run()
 }
 
@@ -102,4 +106,14 @@ func dbUpdate(id int, name string) {
 	db.First(&user, id)
 	user.Name = name
 	db.Save(&user)
+}
+
+// Delete処理
+func dbDelete(id int) {
+	db := gormConnect()
+	defer db.Close()
+
+	var user User
+	db.First(&user, id)
+	db.Delete(&user)
 }
